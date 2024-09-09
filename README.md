@@ -28,6 +28,15 @@ Además, la aplicación permite almacenar esta información en un archivo local,
 
 - Python 3.x 🐍
 - No se permite el uso de bibliotecas externas para la manipulación de archivos GIF.
+- Tener instalado tkinter para que funcione
+
+
+## Python dependencies
+- os
+- pprint
+- tkinter
+- json
+- struct
 
 ## 📋 Instrucciones de Ejecución
 
