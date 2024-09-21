@@ -1,18 +1,18 @@
 """"
     -----------------------------------------
-    ARCHIVO DE CONFIGURACION DE LA APLICACION
+    ARCHIVO DE CONFIGURACIÓN DE LA APLICACIÓN
     -----------------------------------------
 """
 
-# Librerias
+# Librerías
 import json
 import os
 from config.buscador_gifs import BuscadorGifs
 
 
-# Configuracion de la aplicacion
+# Configuración de la aplicación
 class Configurador:
-    # Configuracion de la aplicacion
+    # Configuración de la aplicación
     CONFIG_PATH = "config/config.json"
     JSON_CONFIG = {"folder": "", "gifs": []}
 
@@ -20,34 +20,34 @@ class Configurador:
     def __init__(self):
         self.buscador_gifs = BuscadorGifs()
 
-    # crea el archivo de configuracion
+    # crea el archivo de Configuración
     def crear_archivo_configuracion(self, folder: str = ""):
-        # Si el archivo existe, omitir
-        if self.existe_archivo():
-            return
-
         self.JSON_CONFIG["folder"] = folder
         json_copy = self.JSON_CONFIG.copy()
         json_copy["gifs"] = self.buscador_gifs.buscar_gifs(json_copy["folder"])
         with open(self.CONFIG_PATH, "w") as file:
             json.dump(json_copy, file, indent="\t")
 
-    # Verifica si el archivo de configuracion existe y retorna el JSON
+    # Verifica si el archivo de configuración existe y retorna el JSON
     def configurar(self, gifs_folder: str = "") -> dict | None:
         try:
             # Si el archivo existe, retorna el JSON
             self.crear_archivo_configuracion(gifs_folder)
-            # Si el folder no esta vacio, se actualiza el folder
+            # Si el folder no esta vació, se actualiza el folder
             return self.obtener_json()
         except Exception as e:
-            print(f"Error: {e}")
+            print(f"No se pudo configurar el archivo: {e}")
             return None
 
     # Recupera el JSON del archivo de configuracion
     def obtener_json(self):
-        with open(self.CONFIG_PATH, "r") as file:
-            return json.load(file)
+        try:
+            with open(self.CONFIG_PATH, "r") as file:
+                return json.load(file)
+        except Exception as e:
+            print(f"No se ha podido leer el archivo de configuración: {e}")
+            return {}
 
-    # Verifica si el archivo de configuracion existe
+    # Verifica si el archivo de configuración existe
     def existe_archivo(self):
         return os.path.exists(self.CONFIG_PATH)

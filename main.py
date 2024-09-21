@@ -1,5 +1,5 @@
 """
-PROYECTO DE MANEJO E IMPLEMENTACIÓN DE ARCHIVOS, LECUTRA DE METADATOS EN UN ARCHIVO GIF
+PROYECTO DE MANEJO E IMPLEMENTACIÓN DE ARCHIVOS, LECTURA DE METADATOS EN UN ARCHIVO GIF
 REALIZADO POR DANIEL B. & CHRIS VILLEGAS
 
 ARCHIVO PRINCIPAL, DONDE SE EJECUTA EL PROGRAMA
@@ -28,15 +28,19 @@ class Main:
 
     # inicializa la app
     def start(self):
-        existe_archivo = self.configurador.existe_archivo()
-        json_gifs = None
-        if not existe_archivo:
-            path = self.seleccionar_path()
-            if not path:
-                return
-            json_gifs = self.configurador.configurar(path)
-        else:
+        try:
+            existe_archivo = self.configurador.existe_archivo()
+            json_gifs = None
+            path = "./"
+            if not existe_archivo:
+                path = self.seleccionar_path()
+                if not path:
+                    return
+                json_gifs = self.configurador.configurar(path)
             json_gifs = self.configurador.obtener_json()
+        except Exception as e:
+            print(f"Error inesperado: {e}")
+            return
 
         pprint(json_gifs)
 

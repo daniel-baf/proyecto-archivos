@@ -1,9 +1,693 @@
 {
-	"folder": "/home/danielbaf/Documents/progra/Python/proyecto-archivos/gifs",
-	"gifs": [
-		"/home/danielbaf/Documents/progra/Python/proyecto-archivos/gifs/carpeta2/download-carmen-winstead.gif",
-		"/home/danielbaf/Documents/progra/Python/proyecto-archivos/gifs/error-wait.gif",
-		"/home/danielbaf/Documents/progra/Python/proyecto-archivos/gifs/a/goodbye-thank-you.gif",
-		"/home/danielbaf/Documents/progra/Python/proyecto-archivos/gifs/a/bs/alumae-alumaeyy.gif"
-	]
+  "folder": "/home/danielbaf/Documents/progra/Python/proyecto-archivos",
+  "gifs": [
+    {
+      "path": "/home/danielbaf/Documents/progra/Python/proyecto-archivos/gifs/carpeta2/download-carmen-winstead.gif",
+      "nombre": "download-carmen-winstead.gif",
+      "metadatos": {
+        "fechas": {
+          "fecha_creado": 1725853594.5188177,
+          "fecha_modificado": 1725853590.678746
+        },
+        "header": "GIF89a",
+        "pantalla": {
+          "ancho": 443,
+          "alto": 498,
+          "paleta_global": true,
+          "fondo": 0,
+          "proporcion_pixeles": 0,
+          "bits_color": 8
+        },
+        "paleta_global_colores": {
+          "cantidad": 256,
+          "colores": null
+        },
+        "fin": "Archivo terminado",
+        "bloques": [
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 0,
+            "tiempo_retraso": 10,
+            "color_transparente": 255
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 0,
+            "y_offset": 0,
+            "ancho_img": 443,
+            "alto_img": 498,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 99932
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 0,
+            "tiempo_retraso": 10,
+            "color_transparente": 255
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 0,
+            "y_offset": 0,
+            "ancho_img": 443,
+            "alto_img": 498,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 4,
+            "tamanio_total_datos_comprimidos": 99124
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 0,
+            "tiempo_retraso": 10,
+            "color_transparente": 255
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 0,
+            "y_offset": 0,
+            "ancho_img": 443,
+            "alto_img": 498,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 4,
+            "tamanio_total_datos_comprimidos": 5559
+          }
+        ],
+        "resumen": {
+          "cantidad_imagenes": 3,
+          "cantidad_frames": 3,
+          "cantidad_comentarios": 0
+        }
+      }
+    },
+    {
+      "path": "/home/danielbaf/Documents/progra/Python/proyecto-archivos/gifs/error-wait.gif",
+      "nombre": "error-wait.gif",
+      "metadatos": {
+        "fechas": {
+          "fecha_creado": 1725853572.9950829,
+          "fecha_modificado": 1725853552.4780343
+        },
+        "header": "GIF89a",
+        "pantalla": {
+          "ancho": 166,
+          "alto": 126,
+          "paleta_global": true,
+          "fondo": 0,
+          "proporcion_pixeles": 0,
+          "bits_color": 8
+        },
+        "paleta_global_colores": {
+          "cantidad": 256,
+          "colores": null
+        },
+        "fin": "Archivo terminado",
+        "bloques": [
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 0,
+            "tiempo_retraso": 10,
+            "color_transparente": 255
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 0,
+            "y_offset": 0,
+            "ancho_img": 166,
+            "alto_img": 126,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 5639
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 0,
+            "tiempo_retraso": 10,
+            "color_transparente": 255
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 0,
+            "y_offset": 0,
+            "ancho_img": 166,
+            "alto_img": 126,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 12,
+            "tamanio_total_datos_comprimidos": 631
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 28894,
+            "y_offset": 13714,
+            "ancho_img": 2661,
+            "alto_img": 22294,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 120,
+            "tamanio_total_datos_comprimidos": 5043
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 0,
+            "tiempo_retraso": 10,
+            "color_transparente": 255
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 0,
+            "y_offset": 0,
+            "ancho_img": 166,
+            "alto_img": 126,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 20,
+            "tamanio_total_datos_comprimidos": 742
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 20814,
+            "y_offset": 16688,
+            "ancho_img": 5122,
+            "alto_img": 37558,
+            "entrelazado": true,
+            "tamanio_codigo_lzw": 177,
+            "tamanio_total_datos_comprimidos": 4640
+          }
+        ],
+        "resumen": {
+          "cantidad_imagenes": 5,
+          "cantidad_frames": 3,
+          "cantidad_comentarios": 0
+        }
+      }
+    },
+    {
+      "path": "/home/danielbaf/Documents/progra/Python/proyecto-archivos/gifs/a/goodbye-thank-you.gif",
+      "nombre": "goodbye-thank-you.gif",
+      "metadatos": {
+        "fechas": {
+          "fecha_creado": 1725853630.369488,
+          "fecha_modificado": 1725853626.2994118
+        },
+        "header": "GIF89a",
+        "pantalla": {
+          "ancho": 498,
+          "alto": 498,
+          "paleta_global": true,
+          "fondo": 31,
+          "proporcion_pixeles": 0,
+          "bits_color": 8
+        },
+        "paleta_global_colores": {
+          "cantidad": 256,
+          "colores": null
+        },
+        "fin": "Archivo terminado",
+        "bloques": [
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 1,
+            "tiempo_retraso": 3,
+            "color_transparente": 31
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 0,
+            "y_offset": 0,
+            "ancho_img": 498,
+            "alto_img": 498,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 84173
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": true,
+            "disposicion": 1,
+            "tiempo_retraso": 4,
+            "color_transparente": 228
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 3,
+            "y_offset": 2,
+            "ancho_img": 493,
+            "alto_img": 493,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 81207
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 1,
+            "tiempo_retraso": 3,
+            "color_transparente": 31
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 3,
+            "y_offset": 2,
+            "ancho_img": 493,
+            "alto_img": 493,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 87434
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 1,
+            "tiempo_retraso": 3,
+            "color_transparente": 31
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 3,
+            "y_offset": 2,
+            "ancho_img": 493,
+            "alto_img": 493,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 87819
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 1,
+            "tiempo_retraso": 4,
+            "color_transparente": 31
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 3,
+            "y_offset": 3,
+            "ancho_img": 495,
+            "alto_img": 495,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 88020
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 1,
+            "tiempo_retraso": 3,
+            "color_transparente": 31
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 3,
+            "y_offset": 3,
+            "ancho_img": 495,
+            "alto_img": 495,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 88949
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 1,
+            "tiempo_retraso": 3,
+            "color_transparente": 31
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 2,
+            "y_offset": 2,
+            "ancho_img": 496,
+            "alto_img": 496,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 89525
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 1,
+            "tiempo_retraso": 4,
+            "color_transparente": 31
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 2,
+            "y_offset": 2,
+            "ancho_img": 494,
+            "alto_img": 493,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 88976
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 1,
+            "tiempo_retraso": 3,
+            "color_transparente": 31
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 3,
+            "y_offset": 3,
+            "ancho_img": 492,
+            "alto_img": 492,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 89658
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 1,
+            "tiempo_retraso": 3,
+            "color_transparente": 31
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 3,
+            "y_offset": 3,
+            "ancho_img": 492,
+            "alto_img": 492,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 90561
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 1,
+            "tiempo_retraso": 4,
+            "color_transparente": 31
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 3,
+            "y_offset": 3,
+            "ancho_img": 492,
+            "alto_img": 492,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 89580
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 1,
+            "tiempo_retraso": 3,
+            "color_transparente": 31
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 3,
+            "y_offset": 3,
+            "ancho_img": 492,
+            "alto_img": 492,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 89591
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 1,
+            "tiempo_retraso": 3,
+            "color_transparente": 31
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 3,
+            "y_offset": 3,
+            "ancho_img": 492,
+            "alto_img": 492,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 89129
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 1,
+            "tiempo_retraso": 4,
+            "color_transparente": 31
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 3,
+            "y_offset": 3,
+            "ancho_img": 492,
+            "alto_img": 492,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 89739
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 1,
+            "tiempo_retraso": 3,
+            "color_transparente": 31
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 3,
+            "y_offset": 3,
+            "ancho_img": 492,
+            "alto_img": 492,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 90770
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 1,
+            "tiempo_retraso": 3,
+            "color_transparente": 31
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 3,
+            "y_offset": 3,
+            "ancho_img": 492,
+            "alto_img": 492,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 90438
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 1,
+            "tiempo_retraso": 3,
+            "color_transparente": 31
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 3,
+            "y_offset": 2,
+            "ancho_img": 492,
+            "alto_img": 493,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 91290
+          }
+        ],
+        "resumen": {
+          "cantidad_imagenes": 17,
+          "cantidad_frames": 17,
+          "cantidad_comentarios": 0
+        }
+      }
+    },
+    {
+      "path": "/home/danielbaf/Documents/progra/Python/proyecto-archivos/gifs/a/bs/alumae-alumaeyy.gif",
+      "nombre": "alumae-alumaeyy.gif",
+      "metadatos": {
+        "fechas": {
+          "fecha_creado": 1725853648.4498267,
+          "fecha_modificado": 1725853645.926446
+        },
+        "header": "GIF89a",
+        "pantalla": {
+          "ancho": 498,
+          "alto": 498,
+          "paleta_global": true,
+          "fondo": 31,
+          "proporcion_pixeles": 0,
+          "bits_color": 8
+        },
+        "paleta_global_colores": {
+          "cantidad": 256,
+          "colores": null
+        },
+        "fin": "Archivo terminado",
+        "bloques": [
+          {
+            "tipo": "control_grafico",
+            "transparente": false,
+            "disposicion": 1,
+            "tiempo_retraso": 15,
+            "color_transparente": 31
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 0,
+            "y_offset": 0,
+            "ancho_img": 498,
+            "alto_img": 498,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 127845
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": true,
+            "disposicion": 1,
+            "tiempo_retraso": 50,
+            "color_transparente": 34
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 0,
+            "y_offset": 0,
+            "ancho_img": 498,
+            "alto_img": 498,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 79113
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": true,
+            "disposicion": 1,
+            "tiempo_retraso": 15,
+            "color_transparente": 29
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 0,
+            "y_offset": 0,
+            "ancho_img": 498,
+            "alto_img": 498,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 131364
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": true,
+            "disposicion": 1,
+            "tiempo_retraso": 20,
+            "color_transparente": 83
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 0,
+            "y_offset": 0,
+            "ancho_img": 498,
+            "alto_img": 498,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 123311
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": true,
+            "disposicion": 1,
+            "tiempo_retraso": 40,
+            "color_transparente": 88
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 0,
+            "y_offset": 0,
+            "ancho_img": 498,
+            "alto_img": 498,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 133428
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": true,
+            "disposicion": 1,
+            "tiempo_retraso": 15,
+            "color_transparente": 88
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 0,
+            "y_offset": 0,
+            "ancho_img": 498,
+            "alto_img": 498,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 136302
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": true,
+            "disposicion": 1,
+            "tiempo_retraso": 5,
+            "color_transparente": 88
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 0,
+            "y_offset": 0,
+            "ancho_img": 498,
+            "alto_img": 498,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 137258
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": true,
+            "disposicion": 1,
+            "tiempo_retraso": 10,
+            "color_transparente": 88
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 1,
+            "y_offset": 0,
+            "ancho_img": 497,
+            "alto_img": 498,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 130545
+          },
+          {
+            "tipo": "control_grafico",
+            "transparente": true,
+            "disposicion": 1,
+            "tiempo_retraso": 10,
+            "color_transparente": 88
+          },
+          {
+            "tipo": "imagen",
+            "x_offset": 6,
+            "y_offset": 0,
+            "ancho_img": 492,
+            "alto_img": 498,
+            "entrelazado": false,
+            "tamanio_codigo_lzw": 8,
+            "tamanio_total_datos_comprimidos": 47162
+          }
+        ],
+        "resumen": {
+          "cantidad_imagenes": 9,
+          "cantidad_frames": 9,
+          "cantidad_comentarios": 0
+        }
+      }
+    }
+  ]
 }
