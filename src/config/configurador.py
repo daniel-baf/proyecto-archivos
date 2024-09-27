@@ -5,28 +5,36 @@
 """
 
 # Librerías
-import json
 import os
-from config.buscador_gifs import BuscadorGifs
+from src.config.buscador_gifs import BuscadorGifs
+from src.config.archivo_secuencial.archivo_secuencial import (
+    ControladorArchivoSecuencial,
+)
 
 
 # Configuración de la aplicación
 class Configurador:
     # Configuración de la aplicación
-    CONFIG_PATH = "config/config.json"
-    JSON_CONFIG = {"folder": "", "gifs": []}
+    CONFIG_PATH = "config.bin"
+    DATA_CONFIG = {"folder": "", "gifs": []}
 
     # Constructor
     def __init__(self):
         self.buscador_gifs = BuscadorGifs()
+        self.archivo_secuencial = ControladorArchivoSecuencial()
 
     # crea el archivo de Configuración
     def crear_archivo_configuracion(self, folder: str = ""):
-        self.JSON_CONFIG["folder"] = folder
-        json_copy = self.JSON_CONFIG.copy()
-        json_copy["gifs"] = self.buscador_gifs.buscar_gifs(json_copy["folder"])
-        with open(self.CONFIG_PATH, "w") as file:
-            json.dump(json_copy, file, indent="\t")
+        try:
+            self.DATA_CONFIG["folder"] = folder
+            json_copy = self.DATA_CONFIG.copy()
+            json_copy["gifs"] = self.buscador_gifs.buscar_gifs(json_copy["folder"])
+            # llamamos al servicio de secuenciales
+            self.archivo_secuencial.crear_archivo(self.CONFIG_PATH, json_copy)
+            self.DATA_CONFIG = json_copy
+        except Exception as e:
+            print(f"No se pudo crear el archivo de configuración: {e}")
+            exit()
 
     # Verifica si el archivo de configuración existe y retorna el JSON
     def configurar(self, gifs_folder: str = "") -> dict | None:
@@ -34,16 +42,15 @@ class Configurador:
             # Si el archivo existe, retorna el JSON
             self.crear_archivo_configuracion(gifs_folder)
             # Si el folder no esta vació, se actualiza el folder
-            return self.obtener_json()
+            return self.obtener_config()
         except Exception as e:
             print(f"No se pudo configurar el archivo: {e}")
-            return None
+            exit()
 
     # Recupera el JSON del archivo de configuracion
-    def obtener_json(self):
+    def obtener_config(self):
         try:
-            with open(self.CONFIG_PATH, "r") as file:
-                return json.load(file)
+            return self.archivo_secuencial.leer_archivo(self.CONFIG_PATH)
         except Exception as e:
             print(f"No se ha podido leer el archivo de configuración: {e}")
             return {}

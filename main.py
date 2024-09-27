@@ -6,7 +6,7 @@ ARCHIVO PRINCIPAL, DONDE SE EJECUTA EL PROGRAMA
 """
 
 # importar el configurador
-from config.configurador import Configurador
+from src.config.configurador import Configurador
 
 from pprint import pprint
 import tkinter as tk
@@ -37,7 +37,7 @@ class Main:
                 if not path:
                     return
                 json_gifs = self.configurador.configurar(path)
-            json_gifs = self.configurador.obtener_json()
+            json_gifs = self.configurador.obtener_config()
         except Exception as e:
             print(f"Error inesperado: {e}")
             return

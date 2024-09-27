@@ -173,4 +173,6 @@ class ExtractorMetadatos:
                 "cantidad_comentarios": cantidad_comentarios,
             }
 
+            print(metadatos)
+
         return metadatos
