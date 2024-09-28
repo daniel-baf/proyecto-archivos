@@ -1,3 +1,8 @@
+from typing import BinaryIO
+from .utils.secuencial_utils import read_n_bytes, read_till_byte, extract_from_bytes
+from src.utils.manejador_errores import mostrar_error
+
+
 class ExtractorSecuencial:
     def __init__(self, file_name: str, separadores: dict) -> None:
         self.file_name = file_name  # Nombre del archivo a leer
@@ -7,96 +12,111 @@ class ExtractorSecuencial:
         }  # Diccionario para almacenar datos extraídos
         self.SEPARADORES = separadores  # Separadores definidos para la lectura
 
-    def _read_till_byte(self, delimiter: bytes, byte_stream: bytearray) -> bytearray:
+    def _leer_generic(self, file: BinaryIO) -> None:
         """
-        Reads the byte stream until the specified byte is encountered.
-
-        :param delimiter: The byte to look for as a delimiter.
-        :param byte_stream: The complete byte stream to read from.
-        :return: A bytearray representing a segment of data.
+        Extracts the generic data from the byte stream and adds it to the data dictionary.
+        add folder
+        It is used to extract the generic info of all the JSON file
         """
-        current_segment = bytearray()  # To hold the current segment
-        index = 0  # Start from the beginning of the byte stream
+        try:
+            generic_segment = read_till_byte(self.SEPARADORES["SEGMENTO"], file)
+            folder = generic_segment.decode("utf-8")
+            self.data_dictionary["folder"] = folder
+        except Exception as e:
+            mostrar_error(f"No se ha podido leer la carpeta: {e}")
 
-        while index < len(byte_stream):  # Ensure we don't go out of bounds
-            if (
-                byte_stream[index : index + 1] == delimiter
-            ):  # Check if the current byte matches the delimiter
-                break  # Si se encuentra el delimitador, salir del bucle
-            else:
-                current_segment.append(byte_stream[index])  # Add to the current segment
-            index += 1  # Move to the next byte
+    def _leer_generic_gif(self, gif: dict, file: BinaryIO) -> None:
+        """
+        Extracts the generic data from the byte stream and adds it to the gif dictionary., path and name
+        """
+        try:
+            gif_path = read_till_byte(self.SEPARADORES["GRUPO"], file)
+            gif_name = read_till_byte(self.SEPARADORES["GRUPO"], file)
+            gif["path"] = gif_path.decode("utf-8")
+            gif["nombre"] = gif_name.decode("utf-8")
+        except Exception as e:
+            mostrar_error(f"No se ha podido leer datos genéricos del gif: {e}")
 
-        # Update the byte_stream by slicing it to exclude the read segment and the delimiter
-        byte_stream[:] = byte_stream[
-            index + 1 :
-        ]  # Actualizar el original byte_stream en su lugar
-
-        return current_segment  # Retornar el segmento leído
-
-    def _leer_fechas(self, bytes: bytearray, gif: dict) -> None:
+    def _leer_fechas(self, gif: dict, file: BinaryIO) -> None:
         """
         Extracts the dates from the byte stream and adds them to the gif dictionary.
         """
-        bytes_tmp = self._read_till_byte(
-            self.SEPARADORES["GRUPO"], bytes
-        )  # Leer hasta el grupo
-        fecha = {}  # Diccionario para almacenar fechas
-        # TODO save and recover float values
-        fecha["fecha_creado"] = int.from_bytes(
-            self._read_till_byte(self.SEPARADORES["CAMPO"], bytes_tmp), byteorder="big"
-        )  # Leer fecha de creación
-        fecha["fecha_modificado"] = int.from_bytes(
-            self._read_till_byte(self.SEPARADORES["CAMPO"], bytes_tmp), byteorder="big"
-        )  # Leer fecha de modificación
-        gif["fechas"] = fecha  # Agregar fechas al diccionario gif
+        # Leer hasta el grupo de fechas
+        date_bytes = read_till_byte(self.SEPARADORES["GRUPO"], file)
 
-    def _leer_pantalla(self, bytes: bytearray, metadata: dict) -> None:
-        pantalla = {}  # Diccionario para almacenar información de pantalla
-        bytes_pantalla = self._read_till_byte(self.SEPARADORES["GRUPO"], bytes)
+        # Diccionario para almacenar fechas
+        fecha = {}
+        try:
+            # Extraer y convertir fecha_creado de bytes a cadena y luego a float
+            created_bytes = extract_from_bytes(self.SEPARADORES["CAMPO"], date_bytes)
+            fecha_creado_str = created_bytes.decode("utf-8")  # Decodificar a cadena
+            fecha["fecha_creado"] = float(
+                fecha_creado_str
+            )  # Convertir la cadena a float
 
-        # Leer propiedades de la pantalla
-        ancho = int.from_bytes(
-            self._read_till_byte(self.SEPARADORES["CAMPO"], bytes_pantalla),
-            byteorder="big",
-        )  # Leer ancho
-        alto = int.from_bytes(
-            self._read_till_byte(self.SEPARADORES["CAMPO"], bytes_pantalla),
-            byteorder="big",
-        )  # Leer alto
-        paleta_global = (
-            int.from_bytes(
-                self._read_till_byte(self.SEPARADORES["CAMPO"], bytes_pantalla),
+            # Extraer y convertir fecha_modificado de bytes a cadena y luego a float
+            modified_bytes = extract_from_bytes(self.SEPARADORES["CAMPO"], date_bytes)
+            fecha_modificado_str = modified_bytes.decode(
+                "utf-8"
+            )  # Decodificar a cadena
+            fecha["fecha_modificado"] = float(
+                fecha_modificado_str
+            )  # Convertir la cadena a float
+
+            # Agregar las fechas al diccionario gif
+            gif["fechas"] = fecha
+
+        except Exception as e:
+            mostrar_error(f"Error al recuperar las fechas: {e}")
+
+    def _leer_pantalla(self, metadata: dict, file: BinaryIO) -> None:
+        try:
+            pantalla = {}  # Diccionario para almacenar información de pantalla
+            bytes_pantalla = read_till_byte(self.SEPARADORES["GRUPO"], file)
+            # Leer propiedades de la pantalla
+            ancho = int.from_bytes(
+                extract_from_bytes(self.SEPARADORES["CAMPO"], bytes_pantalla),
                 byteorder="big",
+            )  # Leer ancho
+            alto = int.from_bytes(
+                extract_from_bytes(self.SEPARADORES["CAMPO"], bytes_pantalla),
+                byteorder="big",
+            )  # Leer alto
+            paleta_global = (
+                int.from_bytes(
+                    extract_from_bytes(self.SEPARADORES["CAMPO"], bytes_pantalla),
+                    byteorder="big",
+                )
+                == 1  # Verificar si la paleta global está presente
             )
-            == 1  # Verificar si la paleta global está presente
-        )
-        fondo = int.from_bytes(
-            self._read_till_byte(self.SEPARADORES["CAMPO"], bytes_pantalla),
-            byteorder="big",
-        )  # Leer color de fondo
-        proporcion_pixeles = int.from_bytes(
-            self._read_till_byte(self.SEPARADORES["CAMPO"], bytes_pantalla),
-            byteorder="big",
-        )  # Leer proporción de píxeles
-        bits_color = int.from_bytes(
-            self._read_till_byte(self.SEPARADORES["CAMPO"], bytes_pantalla),
-            byteorder="big",
-        )  # Leer cantidad de bits de color
+            fondo = int.from_bytes(
+                extract_from_bytes(self.SEPARADORES["CAMPO"], bytes_pantalla),
+                byteorder="big",
+            )  # Leer color de fondo
+            proporcion_pixeles = int.from_bytes(
+                extract_from_bytes(self.SEPARADORES["CAMPO"], bytes_pantalla),
+                byteorder="big",
+            )  # Leer proporción de píxeles
+            bits_color = int.from_bytes(
+                extract_from_bytes(self.SEPARADORES["CAMPO"], bytes_pantalla),
+                byteorder="big",
+            )  # Leer cantidad de bits de color
 
-        # Crear diccionario de propiedades de la pantalla
-        pantalla = {
-            "ancho": ancho,
-            "alto": alto,
-            "paleta_global": paleta_global,
-            "fondo": fondo,
-            "proporcion_pixeles": proporcion_pixeles,
-            "bits_color": bits_color,
-        }
+            # Crear diccionario de propiedades de la pantalla
+            pantalla = {
+                "ancho": ancho,
+                "alto": alto,
+                "paleta_global": paleta_global,
+                "fondo": fondo,
+                "proporcion_pixeles": proporcion_pixeles,
+                "bits_color": bits_color,
+            }
 
-        metadata["pantalla"] = pantalla  # Agregar pantalla a los metadatos
+            metadata["pantalla"] = pantalla  # Agregar pantalla a los metadatos
+        except Exception as e:
+            mostrar_error(f"Error al leer la pantalla: {e}")
 
-    def _leer_paleta_colores(self, bytes: bytearray, metadata: dict) -> None:
+    def _leer_paleta_colores(self, metadata: dict, file: BinaryIO) -> None:
         """
         Extracts the global palette colors from the byte stream and adds them to the metadata dictionary.
 
@@ -104,98 +124,82 @@ class ExtractorSecuencial:
         and each color is represented by three bytes (RGB).
         """
         paleta_global = {}  # Diccionario para almacenar la paleta global
-        # Número de colores en la paleta global, puedes cambiar este valor según tu necesidad
-        cantidad = self._read_till_byte(self.SEPARADORES["CAMPO"], bytes)
-        paleta_global["cantidad"] = int.from_bytes(
-            cantidad, byteorder="big"
-        )  # Por ejemplo, si hay 256 colores
+        try:
+            cantidad = read_till_byte(self.SEPARADORES["CAMPO"], file)
+            # almacenamos el valor
+            paleta_global["cantidad"] = int.from_bytes(cantidad, byteorder="big")
+            # vemos si hay varios colores
+            colors_list = read_n_bytes(1, file)
+            if bytes([colors_list[0]]) == b"\x00":
+                paleta_global["colores"] = None
+                read_n_bytes(1, file)  # leemos el separador de GRUPO
+                return
 
-        # Inicializa la lista para almacenar los colores
-        colores = self._read_till_byte(self.SEPARADORES["CAMPO"], bytes)
-        print(colores)
-
-        # Check if the value is null and also if the first byte is equal to 0x01
-        if (
-            colores and colores[0] == 1
-        ):  # Use `1` instead of `b"\x01"` for integer comparison
+            # Hay listado de colores
             paleta_global["colores"] = []
-            # Read each color from the palette (RGB)
-            color_bytes = self._read_till_byte(self.SEPARADORES["CAMPO"], bytes)
-
-            # Read byte by byte and add color as [R, G, B]
-            for index in range(0, len(color_bytes), 3):
-                r = color_bytes[index]
-                g = color_bytes[index + 1]
-                b = color_bytes[index + 2]
+            color_list = read_till_byte(self.SEPARADORES["GRUPO"], file)
+            for i in range(0, len(color_list), 4):
+                r = color_list[i]
+                g = color_list[i + 1]
+                b = color_list[i + 2]
                 paleta_global["colores"].append((r, g, b))
-        else:
-            paleta_global["colores"] = None
+        except Exception as e:
+            mostrar_error(f"Error al leer la paleta de colores: {e}")
+        finally:
+            metadata["paleta_global"] = paleta_global
 
-        # Almacena la paleta global en el diccionario de metadatos
-        metadata["paleta_global"] = paleta_global
+    def _leer_resumen(self, metadatos: dict, file: BinaryIO) -> None:
+        """
+        Extracts the summary information from the byte stream and adds it to the metadata dictionary.
+        """
+        resumen = {}
+        metadatos["resumen"] = resumen
 
     def _leer_metadatos(self, bytes: bytearray, gif: dict) -> tuple:
-        metadatos = {}  # Diccionario para almacenar metadatos
-        # get header
-        metadatos["header"] = self._read_till_byte(
-            self.SEPARADORES["GRUPO"], bytes
-        ).decode(
-            "utf-8"
-        )  # Leer el encabezado
-        # get pantalla
-        self._leer_pantalla(bytes, metadatos)  # Leer información de la pantalla
-        # get paleta colores
-        self._leer_paleta_colores(bytes, metadatos)  # Leer paleta de colores
-
-        while (len(bytes)) > 0:  # Mientras queden bytes por leer
-            gif_group_byte = self._read_till_byte(
+        """
+        Extrae los metadatos y los encapsula en un diccionario. Parte del diccionario del gif
+        """
+        try:
+            metadatos = {}  # Diccionario para almacenar metadatos
+            # get header
+            metadatos["header"] = read_till_byte(
                 self.SEPARADORES["GRUPO"], bytes
-            )  # Leer grupo de GIF
+            ).decode(
+                "utf-8"
+            )  # Leer el encabezado
+            # get pantalla
+            self._leer_pantalla(bytes, metadatos)  # Leer información de la pantalla
+            # get paleta colores
+            self._leer_paleta_colores(bytes, metadatos)  # Leer paleta de colores
 
-        gif["metadatos"] = metadatos  # Agregar metadatos al diccionario gif
+            while (len(bytes)) > 0:  # Mientras queden bytes por leer
+                gif_group_byte = read_till_byte(
+                    self.SEPARADORES["GRUPO"], bytes
+                )  # Leer grupo de GIF
+
+            gif["metadatos"] = metadatos  # Agregar metadatos al diccionario gif
+        except Exception as e:
+            mostrar_error(f"No se ha podido leer los metadatos: {e}")
 
     def leer(self) -> dict:
         with open(self.file_name, "rb") as file:  # Abrir el archivo en modo binario
-            bytes = bytearray(
-                file.read()
-            )  # Leer el contenido del archivo en un bytearray
-
-        # Leer la carpeta
-        self.data_dictionary["folder"] = self._read_till_byte(
-            self.SEPARADORES["SEGMENTO"], bytes
-        ).decode(
-            "utf-8"
-        )  # Leer el nombre de la carpeta
-
-        gifs_bytes = self._read_till_byte(
-            self.SEPARADORES["SEGMENTO"], bytes
-        )  # Leer los bytes de los GIFs
-
-        self.data_dictionary["gifs"] = []  # Inicializar la lista de GIFs
-
-        # Leer los GIFs
-        while len(gifs_bytes) > 0:  # Mientras queden bytes de GIFs por leer
-            gif = {}  # Diccionario para un GIF
-            gif_bytes = self._read_till_byte(
-                self.SEPARADORES["BLOQUE"], gifs_bytes
-            )  # Leer el bloque de GIF
-
-            # leer nombre por bloque
-            gif["path"] = self._read_till_byte(
-                self.SEPARADORES["GRUPO"], gif_bytes
-            ).decode(
-                "utf-8"
-            )  # Leer la ruta del GIF
-            # get name
-            gif["nombre"] = self._read_till_byte(
-                self.SEPARADORES["GRUPO"], gif_bytes
-            ).decode(
-                "utf-8"
-            )  # Leer el nombre del GIF
-            # # get fecha
-            # self._leer_fechas(gif_bytes, gif)  # Leer las fechas del GIF
-            # # metadatos
-            # self._leer_metadatos(gif_bytes, gif)  # Leer metadatos del GIF
-            self.data_dictionary["gifs"].append(gif)  # Agregar el GIF a la lista
+            self._leer_generic(file)
+            # Leer los GIFs, al final debemos eliminar el byte de SEGMENTO para cerrar el archivo
+            self.data_dictionary["gifs"] = []  # Inicializar la lista de GIFs
+            # Leer los GIFs
+            while True:  # Mientras queden bytes de GIFs por leer
+                gif = {}  # Diccionario para un GIF
+                self._leer_generic_gif(gif, file)  # Leer datos genéricos del GIF
+                metadata = {}
+                self._leer_fechas(metadata, file)  # Leer fechas del GIF
+                metadata["header"] = read_till_byte(
+                    self.SEPARADORES["GRUPO"], file
+                ).decode("utf-8")
+                self._leer_pantalla(metadata, file)  # Leer información de la pantalla
+                self._leer_paleta_colores(metadata, file)
+                gif["metadatos"] = metadata
+                self._leer_resumen(metadata, file)  # Leer resumen del GIF
+                self.data_dictionary["gifs"].append(gif)  # Agregar el GIF a la lista
+                break
 
         return self.data_dictionary  # Retornar el diccionario de datos extraídos

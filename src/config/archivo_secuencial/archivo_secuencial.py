@@ -1,18 +1,14 @@
-from src.config.archivo_secuencial.generador_secuencial import (
-    GeneradorArchivoSecuencial,
-)
-from src.config.archivo_secuencial.extractor_secuencial import (
-    ExtractorSecuencial,
-)
+from .extractor_secuencial import ExtractorSecuencial
+from .generador_secuencial import GeneradorArchivoSecuencial
 
 
 class ControladorArchivoSecuencial:
 
     SEPARADORES = {
-        "SEGMENTO": "@".encode("UTF-8"),
-        "BLOQUE": "^".encode("utf-8"),
-        "GRUPO": "#".encode("utf-8"),
-        "CAMPO": "$".encode("utf-8"),
+        "SEGMENTO": b"\x05",
+        "BLOQUE": b"\x04",
+        "GRUPO": b"\x03",
+        "CAMPO": b"\x02",
     }
 
     def __init__(self) -> None:

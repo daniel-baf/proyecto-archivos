@@ -6,8 +6,8 @@
 
 # Librerías
 import os
-from src.config.buscador_gifs import BuscadorGifs
-from src.config.archivo_secuencial.archivo_secuencial import (
+from .buscador_gifs import BuscadorGifs
+from .archivo_secuencial.archivo_secuencial import (
     ControladorArchivoSecuencial,
 )
 
@@ -50,9 +50,7 @@ class Configurador:
     # Recupera el JSON del archivo de configuracion
     def obtener_config(self):
         try:
-            # return self.archivo_secuencial.leer_archivo(self.CONFIG_PATH)
-            return {"message": "TEMPORAL"}
-            # TODO: Descomentar la linea de arriba y comentar la de abajo
+            return self.archivo_secuencial.leer_archivo(self.CONFIG_PATH)
         except Exception as e:
             print(f"No se ha podido leer el archivo de configuración: {e}")
             return {}

@@ -7,8 +7,9 @@ ARCHIVO PRINCIPAL, DONDE SE EJECUTA EL PROGRAMA
 
 # importar el configurador
 from src.config.configurador import Configurador
+from src.utils.manejador_errores import mostrar_error, mostrar_completado
 
-from pprint import pprint
+
 import tkinter as tk
 from tkinter import filedialog
 
@@ -39,10 +40,10 @@ class Main:
                 json_gifs = self.configurador.configurar(path)
             json_gifs = self.configurador.obtener_config()
         except Exception as e:
-            print(f"Error inesperado: {e}")
+            mostrar_error(f"Error inesperado: {e}")
             return
 
-        # pprint(json_gifs)
+        mostrar_completado(json_gifs)
 
 
 if __name__ == "__main__":

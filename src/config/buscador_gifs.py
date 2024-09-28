@@ -6,6 +6,7 @@ GIFs EN UNA CARPETA ESPECIFICA y retorna un listado de los archivos encontrados
 # Librerías
 import os
 from src.METADATOS.extractor_metadatos import ExtractorMetadatos
+from src.utils.manejador_errores import mostrar_error
 
 
 # Se encarga de buscar todos los archivos GIFs en un directorio
@@ -39,5 +40,5 @@ class BuscadorGifs:
             # Directorio de los archivos GIFs
             return self._buscar_gifs(root_folder, gifs)
         except Exception as e:
-            print(f"Error buscando archivos GIFs, se ha saltado este paso: {e}")
+            mostrar_error(f"Error buscando archivos GIFs, se ha saltado este paso: {e}")
             return []
