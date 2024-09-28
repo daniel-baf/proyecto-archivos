@@ -112,18 +112,21 @@ class ExtractorSecuencial:
 
         # Inicializa la lista para almacenar los colores
         colores = self._read_till_byte(self.SEPARADORES["CAMPO"], bytes)
-        # revisar si el valor es nulo
-        if colores[0] == b"\x01":
+        print(colores)
+
+        # Check if the value is null and also if the first byte is equal to 0x01
+        if (
+            colores and colores[0] == 1
+        ):  # Use `1` instead of `b"\x01"` for integer comparison
             paleta_global["colores"] = []
-            # Lee cada color de la paleta (RGB)
+            # Read each color from the palette (RGB)
             color_bytes = self._read_till_byte(self.SEPARADORES["CAMPO"], bytes)
-            # read byte by byte and add color as [R, G, B]
-            index = 0
-            while index < len(color_bytes):
-                r = int.from_bytes(color_bytes[index], byteorder="big")
-                g = int.from_bytes(color_bytes[index + 1], byteorder="big")
-                b = int.from_bytes(color_bytes[index + 2], byteorder="big")
-                index += 3
+
+            # Read byte by byte and add color as [R, G, B]
+            for index in range(0, len(color_bytes), 3):
+                r = color_bytes[index]
+                g = color_bytes[index + 1]
+                b = color_bytes[index + 2]
                 paleta_global["colores"].append((r, g, b))
         else:
             paleta_global["colores"] = None
@@ -189,20 +192,10 @@ class ExtractorSecuencial:
             ).decode(
                 "utf-8"
             )  # Leer el nombre del GIF
-            # get fecha
-            self._leer_fechas(gif_bytes, gif)  # Leer las fechas del GIF
-            # metadatos
-            self._leer_metadatos(gif_bytes, gif)  # Leer metadatos del GIF
+            # # get fecha
+            # self._leer_fechas(gif_bytes, gif)  # Leer las fechas del GIF
+            # # metadatos
+            # self._leer_metadatos(gif_bytes, gif)  # Leer metadatos del GIF
             self.data_dictionary["gifs"].append(gif)  # Agregar el GIF a la lista
 
         return self.data_dictionary  # Retornar el diccionario de datos extraídos
-
-
-"""
-    SEPARADORES = {
-        "SEGMENTO": "@".encode("UTF-8"),  # Delimitador para segmentos
-        "BLOQUE": "^".encode("utf-8"),  # Delimitador para bloques
-        "GRUPO": "#".encode("utf-8"),  # Delimitador para grupos
-        "CAMPO": "$".encode("utf-8"),  # Delimitador para campos
-    }
-"""

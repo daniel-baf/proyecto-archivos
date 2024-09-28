@@ -100,7 +100,7 @@ class ExtractorMetadatos:
             "ascii", errors="ignore"
         )  # Unir y decodificar los comentarios
 
-    def extraer_metadatos(self, gif_path, append_colors=False) -> dict:
+    def extraer_metadatos(self, gif_path, append_colors=True) -> dict:
         metadatos = {}
 
         # Obtener fechas de creación y modificación
@@ -172,7 +172,5 @@ class ExtractorMetadatos:
                 "cantidad_frames": cantidad_frames,
                 "cantidad_comentarios": cantidad_comentarios,
             }
-
-            print(metadatos)
 
         return metadatos

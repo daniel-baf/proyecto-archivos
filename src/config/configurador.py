@@ -50,7 +50,9 @@ class Configurador:
     # Recupera el JSON del archivo de configuracion
     def obtener_config(self):
         try:
-            return self.archivo_secuencial.leer_archivo(self.CONFIG_PATH)
+            # return self.archivo_secuencial.leer_archivo(self.CONFIG_PATH)
+            return {"message": "TEMPORAL"}
+            # TODO: Descomentar la linea de arriba y comentar la de abajo
         except Exception as e:
             print(f"No se ha podido leer el archivo de configuración: {e}")
             return {}

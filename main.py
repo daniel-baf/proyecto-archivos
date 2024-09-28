@@ -42,7 +42,7 @@ class Main:
             print(f"Error inesperado: {e}")
             return
 
-        pprint(json_gifs)
+        # pprint(json_gifs)
 
 
 if __name__ == "__main__":
