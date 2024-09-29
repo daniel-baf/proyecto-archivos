@@ -1,6 +1,6 @@
 from typing import BinaryIO
 from .utils.secuencial_utils import read_n_bytes, read_till_byte, extract_from_bytes
-from src.utils.manejador_errores import mostrar_error
+from src.utils.manejador_errores import mostrar_error, mostrar_alerta
 
 
 class ExtractorSecuencial:
@@ -153,7 +153,67 @@ class ExtractorSecuencial:
         Extracts the summary information from the byte stream and adds it to the metadata dictionary.
         """
         resumen = {}
+        try:
+            resumen["cantidad_imagenes"] = int.from_bytes(
+                read_till_byte(self.SEPARADORES["CAMPO"], file), byteorder="big"
+            )
+            resumen["cantidad_frames"] = int.from_bytes(
+                read_till_byte(self.SEPARADORES["CAMPO"], file), byteorder="big"
+            )
+            resumen["comentarios"] = int.from_bytes(
+                read_till_byte(self.SEPARADORES["CAMPO"], file), byteorder="big"
+            )
+            read_n_bytes(1, file)  # leemos el separador de GRUPO
+        except Exception as e:
+            mostrar_error(f"Error al leer el resumen: {e}")
         metadatos["resumen"] = resumen
+
+    def _extract_type_of_block(self, block: bytearray) -> any:
+        """
+        Extracts the type of block from the byte array and returns it.
+        """
+        try:
+            # Leer el tipo de bloque
+            tipo_bloque = extract_from_bytes(self.SEPARADORES["DIVISOR"], block).decode(
+                "utf-8"
+            )
+            datos_bloque = block[len(tipo_bloque) + 1 :]
+            # Verificar el tipo de bloque
+            if tipo_bloque == "bool":
+                return bool(int.from_bytes(datos_bloque, byteorder="big"))
+            elif tipo_bloque == "num":
+                return int.from_bytes(datos_bloque, byteorder="big")
+            return datos_bloque.decode("utf-8")
+        except Exception as e:
+            mostrar_error(f"No se ha podido extraer el tipo de bloque: {e}")
+            return
+
+    def _leer_bloques(self, gif: dict, file: BinaryIO) -> None:
+        """
+        Extracts the blocks from the byte stream and adds them to the gif dictionary.
+        """
+        bloques = []  # Lista para almacenar bloques
+        try:
+            while True:
+                bloque_subgrupo = read_till_byte(self.SEPARADORES["SUBGRUPO"], file)
+                mostrar_alerta(bloque_subgrupo)
+                bloque = {}
+                if len(bloque_subgrupo) == 0:
+                    break
+                # leer cada campo
+                while True:
+                    campo = extract_from_bytes(
+                        self.SEPARADORES["CAMPO"], bloque_subgrupo
+                    )
+                    bloque_subgrupo = bloque_subgrupo[len(campo) + 1 :]
+                    if not campo:
+                        break
+                        // TODO colocar datos 1 a 1
+
+                bloques.append(bloque)
+        except Exception as e:
+            mostrar_error(f"No se ha podido leer los bloques: {e}")
+        gif["bloques"] = bloques
 
     def _leer_metadatos(self, bytes: bytearray, gif: dict) -> tuple:
         """
@@ -199,6 +259,7 @@ class ExtractorSecuencial:
                 self._leer_paleta_colores(metadata, file)
                 gif["metadatos"] = metadata
                 self._leer_resumen(metadata, file)  # Leer resumen del GIF
+                self._leer_bloques(gif, file)  # Leer bloques del GIF
                 self.data_dictionary["gifs"].append(gif)  # Agregar el GIF a la lista
                 break
 

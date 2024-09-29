@@ -5,10 +5,12 @@ from .generador_secuencial import GeneradorArchivoSecuencial
 class ControladorArchivoSecuencial:
 
     SEPARADORES = {
-        "SEGMENTO": b"\x05",
-        "BLOQUE": b"\x04",
-        "GRUPO": b"\x03",
-        "CAMPO": b"\x02",
+        "SEGMENTO": b"\x02",
+        "BLOQUE": b"\x03",
+        "GRUPO": b"\x04",
+        "SUBGRUPO": b"\x05",
+        "CAMPO": b"\x06",
+        "DIVISOR": b"\x07",
     }
 
     def __init__(self) -> None:

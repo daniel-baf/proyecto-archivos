@@ -172,17 +172,20 @@ class GeneradorArchivoSecuencial:
         append_bytes(summary_bytes, file_name)
 
     def _agregar_bloques(self, bloques: list, file_name: str) -> None:
+        """
+        Agrega toda la info encontrada de los sub bloques de metadatos al archivo como bytes.
+        """
         try:
             bloques_bytes = bytearray()
             for bloque in bloques:
                 for clave, valor in bloque.items():
                     clave_bytes = clave.encode("utf-8")
-                    if isinstance(valor, (int, float)):
-                        tipo = "num"
-                        valor = str(valor).encode("utf-8")
-                    elif isinstance(valor, bool):
+                    if isinstance(valor, bool):
                         tipo = "bool"
                         valor = b"1" if valor else b"0"
+                    elif isinstance(valor, (int, float)):
+                        tipo = "num"
+                        valor = str(valor).encode("utf-8")
                     elif isinstance(valor, str):
                         tipo = "str"
                         valor = valor.encode("utf-8")
@@ -192,12 +195,13 @@ class GeneradorArchivoSecuencial:
                     # Agregar tipo y valor al bytearray
                     bloques_bytes += (
                         clave_bytes
-                        + self.SEPARADORES["CAMPO"]
-                        + f"{tipo}:{valor}".encode("utf-8")
+                        + tipo.encode("utf-8")
+                        + self.SEPARADORES["DIVISOR"]
+                        + valor
                         + self.SEPARADORES["CAMPO"]
                     )
 
-            bloques_bytes += self.SEPARADORES["GRUPO"]
+                bloques_bytes += self.SEPARADORES["SUBGRUPO"]
             append_bytes(bloques_bytes, file_name)
         except Exception as e:
             mostrar_error(f"Error recuperando los metadatos de los bloques: {e}")
