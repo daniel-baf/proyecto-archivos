@@ -5,6 +5,7 @@
 """
 
 # Librerías
+import json
 import os
 from .buscador_gifs import BuscadorGifs
 from .archivo_secuencial.archivo_secuencial import (

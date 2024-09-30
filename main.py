@@ -38,7 +38,8 @@ class Main:
                 if not path:
                     return
                 json_gifs = self.configurador.configurar(path)
-            json_gifs = self.configurador.obtener_config()
+            else:
+                json_gifs = self.configurador.obtener_config()
         except Exception as e:
             mostrar_error(f"Error inesperado: {e}")
             return

@@ -124,19 +124,24 @@ class ExtractorSecuencial:
         and each color is represented by three bytes (RGB).
         """
         paleta_global = {}  # Diccionario para almacenar la paleta global
+        paleta_bytes = extract_from_bytes(self.SEPARADORES["GRUPO"], file)
         try:
-            cantidad = extract_from_bytes(self.SEPARADORES["CAMPO"], file)
+            cantidad = extract_from_bytes(self.SEPARADORES["CAMPO"], paleta_bytes)
             # almacenamos el valor
             paleta_global["cantidad"] = int.from_bytes(cantidad, byteorder="big")
+            # index de tabla
+            has_color_append = extract_from_bytes(
+                self.SEPARADORES["CAMPO"], paleta_bytes
+            )
             # vemos si hay varios colores
             # borramos el primer byte
-            if bytes([file[0]]) == b"\x00":
+            if bytes(has_color_append) == b"\x00":
                 paleta_global["colores"] = None
                 return
 
             # Hay listado de colores
             paleta_global["colores"] = []
-            color_list = extract_from_bytes(self.SEPARADORES["GRUPO"], file)
+            color_list = paleta_bytes
             for i in range(0, len(color_list), 4):
                 r = color_list[i]
                 g = color_list[i + 1]
@@ -153,17 +158,17 @@ class ExtractorSecuencial:
         """
         resumen = {}
         try:
-            resumen["cantidad_imagenes"] = int.from_bytes(
-                extract_from_bytes(self.SEPARADORES["CAMPO"], file), byteorder="big"
-            )
+            resumen_bytes = extract_from_bytes(self.SEPARADORES["GRUPO"], file)
+            tmp_bytes = extract_from_bytes(self.SEPARADORES["CAMPO"], resumen_bytes)
+            resumen["cantidad_imagenes"] = int.from_bytes(tmp_bytes, byteorder="big")
             resumen["cantidad_frames"] = int.from_bytes(
-                extract_from_bytes(self.SEPARADORES["CAMPO"], file), byteorder="big"
+                extract_from_bytes(self.SEPARADORES["CAMPO"], resumen_bytes),
+                byteorder="big",
             )
             resumen["comentarios"] = int.from_bytes(
-                extract_from_bytes(self.SEPARADORES["CAMPO"], file), byteorder="big"
+                extract_from_bytes(self.SEPARADORES["CAMPO"], resumen_bytes),
+                byteorder="big",
             )
-            # borramos un byte
-            del file[0]
         except Exception as e:
             mostrar_error(f"Error al leer el resumen: {e}")
         metadatos["resumen"] = resumen
@@ -243,10 +248,9 @@ class ExtractorSecuencial:
             # Leer los GIFs, al final debemos eliminar el byte de SEGMENTO para cerrar el archivo
             self.data_dictionary["gifs"] = []  # Inicializar la lista de GIFs
             # Leer los GIFs
-            while True:  # Mientras queden bytes de GIFs por leer
-                gif_bytes = read_till_byte(self.SEPARADORES["SEGMENTO"], file)
-                if len(gif_bytes) == 0:
-                    break
+            while gif_bytes := read_till_byte(
+                self.SEPARADORES["SEGMENTO"], file
+            ):  # Mientras queden bytes de GIFs por leer
                 gif = {}  # Diccionario para un GIF
                 self._leer_generic_gif(gif, gif_bytes)  # Leer datos genéricos del GIF
                 metadata = {}
@@ -257,11 +261,9 @@ class ExtractorSecuencial:
                 self._leer_pantalla(
                     metadata, gif_bytes
                 )  # Leer información de la pantalla
-                self._leer_paleta_colores(metadata, gif_bytes)
                 self._leer_resumen(metadata, gif_bytes)  # Leer resumen del GIF
+                self._leer_paleta_colores(metadata, gif_bytes)
                 self._leer_bloques(gif, gif_bytes)  # Leer bloques del GIF
                 gif["metadatos"] = metadata
                 self.data_dictionary["gifs"].append(gif)  # Agregar el GIF a la lista
-            #     break
-
         return self.data_dictionary  # Retornar el diccionario de datos extraídos

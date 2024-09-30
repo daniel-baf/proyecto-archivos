@@ -1,5 +1,3 @@
-import os
-
 from .utils.secuencial_utils import append_bytes
 from src.utils.manejador_errores import mostrar_error
 
@@ -126,6 +124,7 @@ class GeneradorArchivoSecuencial:
 
             byte_index_color = b"\x00" if colores is None else b"\x01"
             bytes_colores += byte_index_color
+            bytes_colores += self.SEPARADORES["CAMPO"]
             append_bytes(bytes_colores, file_name)
             bytes_colores = bytearray()
 
@@ -151,25 +150,25 @@ class GeneradorArchivoSecuencial:
         """
         Agrega los datos del resumen al archivo como bytes.
         """
-        # Convertir y agregar la cantidad de imágenes, frames y comentarios
-        cantidad_imagenes = int(resumen["cantidad_imagenes"])
-        cantidad_frames = int(resumen["cantidad_frames"])
-        cantidad_comentarios = int(resumen["cantidad_comentarios"])
-        summary_bytes = bytearray()
-        summary_bytes += (
-            cantidad_imagenes.to_bytes(2, byteorder="big") + self.SEPARADORES["CAMPO"]
-        )
-        summary_bytes += (
-            cantidad_frames.to_bytes(2, byteorder="big") + self.SEPARADORES["CAMPO"]
-        )
-        summary_bytes += (
-            cantidad_comentarios.to_bytes(2, byteorder="big")
-            + self.SEPARADORES["CAMPO"]
-        )
-
-        # Finalizar con el separador de grupo
-        summary_bytes += self.SEPARADORES["GRUPO"]
-        append_bytes(summary_bytes, file_name)
+        try:
+            # Convertir y agregar la cantidad de imágenes, frames y comentarios
+            cantidad_imagenes = int(resumen["cantidad_imagenes"])
+            cantidad_frames = int(resumen["cantidad_frames"])
+            cantidad_comentarios = int(resumen["cantidad_comentarios"])
+            summary_bytes = bytearray()
+            summary_bytes += (
+                cantidad_imagenes.to_bytes(1, byteorder="big")
+                + self.SEPARADORES["CAMPO"]
+                + cantidad_frames.to_bytes(1, byteorder="big")
+                + self.SEPARADORES["CAMPO"]
+                + cantidad_comentarios.to_bytes(1, byteorder="big")
+                + self.SEPARADORES["CAMPO"]
+                + self.SEPARADORES["GRUPO"]
+            )
+            # Finalizar con el separador de grupo
+            append_bytes(summary_bytes, file_name)
+        except Exception as e:
+            mostrar_error(f"Error recuperando los metadatos del resumen: {e}")
 
     def _agregar_bloques(self, bloques: list, file_name: str) -> None:
         """
@@ -222,13 +221,13 @@ class GeneradorArchivoSecuencial:
                 bytes += metadatos["header"].encode("utf-8") + self.SEPARADORES["GRUPO"]
                 append_bytes(bytes, file_name)
                 self._agregar_pantalla(metadatos["pantalla"], file_name)
+                self._agregar_resumen(metadatos["resumen"], file_name)
                 self._agregar_paleta_colores(
                     metadatos["paleta_global_colores"], file_name
                 )
-                self._agregar_resumen(metadatos["resumen"], file_name)
                 self._agregar_bloques(metadatos["bloques"], file_name)
                 append_bytes(
-                    self.SEPARADORES["SEGMENTO"], file_name
+                    bytearray(self.SEPARADORES["SEGMENTO"]), file_name
                 )  # fin de la lista de gifs
         except Exception as e:
             mostrar_error(f"Error inesperado: {e}")
