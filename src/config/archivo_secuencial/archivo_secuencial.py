@@ -6,11 +6,10 @@ class ControladorArchivoSecuencial:
 
     SEPARADORES = {
         "SEGMENTO": b"\x02",
-        "BLOQUE": b"\x03",
-        "GRUPO": b"\x04",
-        "SUBGRUPO": b"\x05",
-        "CAMPO": b"\x06",
-        "DIVISOR": b"\x07",
+        "GRUPO": b"\x03",
+        "SUBGRUPO": b"\x04",
+        "CAMPO": b"\x05",
+        "DIVISOR": b"\x06",
     }
 
     def __init__(self) -> None:

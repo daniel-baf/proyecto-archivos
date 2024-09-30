@@ -64,6 +64,7 @@ def extract_from_bytes(
     except Exception as e:
         mostrar_error(f"Error al extraer datos del stream de bytes: {e}")
     finally:
+        del bytes_array[: position + 1]
         return data_array
 
 

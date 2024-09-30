@@ -195,6 +195,7 @@ class GeneradorArchivoSecuencial:
                     # Agregar tipo y valor al bytearray
                     bloques_bytes += (
                         clave_bytes
+                        + self.SEPARADORES["DIVISOR"]
                         + tipo.encode("utf-8")
                         + self.SEPARADORES["DIVISOR"]
                         + valor
@@ -202,6 +203,7 @@ class GeneradorArchivoSecuencial:
                     )
 
                 bloques_bytes += self.SEPARADORES["SUBGRUPO"]
+            bloques_bytes += self.SEPARADORES["GRUPO"]
             append_bytes(bloques_bytes, file_name)
         except Exception as e:
             mostrar_error(f"Error recuperando los metadatos de los bloques: {e}")
@@ -225,9 +227,8 @@ class GeneradorArchivoSecuencial:
                 )
                 self._agregar_resumen(metadatos["resumen"], file_name)
                 self._agregar_bloques(metadatos["bloques"], file_name)
-                bytes += self.SEPARADORES["BLOQUE"]  # fin de cada gif
-            append_bytes(
-                self.SEPARADORES["SEGMENTO"], file_name
-            )  # fin de la lista de gifs
+                append_bytes(
+                    self.SEPARADORES["SEGMENTO"], file_name
+                )  # fin de la lista de gifs
         except Exception as e:
             mostrar_error(f"Error inesperado: {e}")

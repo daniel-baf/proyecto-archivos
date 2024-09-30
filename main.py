@@ -43,7 +43,7 @@ class Main:
             mostrar_error(f"Error inesperado: {e}")
             return
 
-        # mostrar_completado(json_gifs)
+        mostrar_completado(json_gifs)
 
 
 if __name__ == "__main__":
