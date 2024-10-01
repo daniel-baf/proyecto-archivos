@@ -16,7 +16,7 @@ def mostrar_error(mensaje: str) -> None:
     print(f"{rojo}{mensaje_formateado}{reset}")
 
 
-def mostrar_completado(mensaje: str) -> None:
+def mostrar_completado(mensaje: str) -> str:
     """
     Muestra un mensaje de completado.
     """
@@ -25,6 +25,7 @@ def mostrar_completado(mensaje: str) -> None:
     reset = Style.RESET_ALL
     mensaje_formateado = pformat(mensaje)
     print(f"{verde}{mensaje_formateado}{reset}")
+    return f"{verde}{mensaje_formateado}{reset}"
 
 
 def mostrar_alerta(mensaje: str) -> None:

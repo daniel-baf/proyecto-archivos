@@ -5,19 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f4be60ac-443d-49dd-b568-a957084006e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/proyecto-archivos.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Interfaz.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Main2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gifs/a/bs/alumae-alumaeyy.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gifs/a/goodbye-thank-you.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gifs/carpeta2/download-carmen-winstead.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gifs/error-wait.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interfaz.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interfaz.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/manejador_errores.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/manejador_errores.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

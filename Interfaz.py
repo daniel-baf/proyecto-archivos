@@ -72,9 +72,9 @@ class MainWindow(QMainWindow):
                 self.cargar_gifs(json_gifs)
 
             if json_gifs:
-                self.text_edit.setPlainText(f"Metadatos obtenidos:\n{pformat(json_gifs)}")
+                self.text_edit.setPlainText(f"Metadatos obtenidos:\n{mostrar_completado(json_gifs)}")
         except Exception as e:
-            self.text_edit.setPlainText(f"Error inesperado: {e}")
+            self.text_edit.setPlainText(mostrar_error(f"Error inesperado: {e}"))
 
     def cargar_gifs(self, json_gifs):
         self.gif_list.clear()  # Limpiar la lista antes de cargar nuevos elementos
