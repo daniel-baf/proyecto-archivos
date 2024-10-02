@@ -1,3 +1,7 @@
+#---------------------------------------
+#------------Interfaz gráfica-----------
+#----Daniel Bautista & Chris Villegas---
+#---------------------------------------
 import sys
 from src.config.configurador import Configurador
 from src.utils.manejador_errores import mostrar_error, mostrar_completado
