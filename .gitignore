@@ -1,8 +1,11 @@
+# FILES
+config.bin
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-.vscode/
+.vscode/.vscode/
 .idea/
 # C extensions
 *.so
