@@ -46,15 +46,28 @@ class MainWindow(QMainWindow):
         self.splitter = QSplitter()
         layout.addWidget(self.splitter)
 
-        # Lista para mostrar los GIFs
+        # Crear contenedores para los layouts
+        gif_container = QWidget()
+        metadata_container = QWidget()
+
+        # Crear layouts verticales para los contenedores
+        gif_layout = QVBoxLayout(gif_container)
+        self.label_gif_list = QLabel("Archivos GIF", self)
+        gif_layout.addWidget(self.label_gif_list)
         self.gif_list = QListWidget()
-        self.gif_list.itemClicked.connect(self.mostrar_metadatos)  # Conectar la señal de clic
-        self.splitter.addWidget(self.gif_list)
+        self.gif_list.itemClicked.connect(self.mostrar_metadatos)
+        gif_layout.addWidget(self.gif_list)
 
-        # Caja de texto para mostrar la salida de metadatos
+        metadata_layout = QVBoxLayout(metadata_container)
+        self.label_text_edit = QLabel("Metadatos", self)
+        metadata_layout.addWidget(self.label_text_edit)
         self.text_edit = QTextEdit(self)
-        self.splitter.addWidget(self.text_edit)
+        metadata_layout.addWidget(self.text_edit)
 
+        # Agregar los contenedores al splitter
+        self.splitter.addWidget(gif_container)
+        self.splitter.addWidget(metadata_container)
+        
         # Botón para seleccionar carpeta
         self.btn_select_folder = QPushButton("Seleccionar nueva carpeta", self)
         self.btn_select_folder.clicked.connect(self.seleccionar_path)
