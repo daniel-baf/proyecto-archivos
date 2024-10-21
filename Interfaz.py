@@ -61,13 +61,16 @@ class MainWindow(QMainWindow):
         metadata_layout = QVBoxLayout(metadata_container)
         self.label_text_edit = QLabel("Metadatos", self)
         metadata_layout.addWidget(self.label_text_edit)
-        self.text_edit = QTextEdit(self)
+        self.text_edit = QTextEdit(self, readOnly=False)  # Allow editing
         metadata_layout.addWidget(self.text_edit)
 
         # Agregar los contenedores al splitter
         self.splitter.addWidget(gif_container)
         self.splitter.addWidget(metadata_container)
-        
+
+        self.save_button = QPushButton("Guardar cambios", self)
+        self.save_button.clicked.connect(self.guardar_cambios)
+        metadata_layout.addWidget(self.save_button)
         # Botón para seleccionar carpeta
         self.btn_select_folder = QPushButton("Seleccionar nueva carpeta", self)
         self.btn_select_folder.clicked.connect(self.seleccionar_path)
@@ -93,6 +96,19 @@ class MainWindow(QMainWindow):
         except Exception as e:
             self.text_edit.setPlainText(mostrar_error(f"Error inesperado: {e}"))
 
+    def guardar_cambios(self):
+        try:
+            # Obtener los metadatos editados del QTextEdit
+            nuevos_metadatos = self.text_edit.toPlainText()
+
+            # Guardar los cambios en un archivo de texto
+            with open("metadatos_editados.txt", "w") as f:
+                f.write(nuevos_metadatos)
+
+            QMessageBox.information(self, "Éxito", "Cambios guardados en metadatos.txt")
+
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Error al guardar los cambios: {str(e)}")
     def cargar_gifs(self, json_gifs):
         self.gif_list.clear()  # Limpiar la lista antes de cargar nuevos elementos
         for gif in json_gifs["gifs"]:
@@ -112,6 +128,7 @@ class MainWindow(QMainWindow):
         msg_box.setWindowTitle("Bienvenido")
         msg_box.setText("Bienvenido al programa. No se ha encontrado un archivo de configuración.")
         msg_box.setInformativeText("Haz clic en 'Examinar' para seleccionar una carpeta con archivos GIF.")
+        msg_box.setIcon(QMessageBox.Icon.Information)
         msg_box.setIcon(QMessageBox.Icon.Information)
 
         btn_examinar = msg_box.addButton("Examinar", QMessageBox.ButtonRole.AcceptRole)
